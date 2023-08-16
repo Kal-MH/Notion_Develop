@@ -1,14 +1,14 @@
-import { ERROR_NEW_KEYWORD_MISSING, idNameObj } from "../utils/constants.js";
-import { hasNewTarget, isValidArray } from "../utils/error.js";
-import DocumentFooter from "./DocumentFooter.js";
-import DocumentHeader from "./DocumentHeader.js";
-import Documents from "./Documents.js";
+import { ERROR_NEW_KEYWORD_MISSING, idNameObj } from '../utils/constants.js';
+import { hasNewTarget, isValidArray } from '../utils/error.js';
+import DocumentFooter from './DocumentFooter.js';
+import DocumentHeader from './DocumentHeader.js';
+import Documents from './Documents.js';
 
 export default function DocumentPage({ $target, initialState }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
-  const $page = document.createElement("div");
-  $page.setAttribute("id", idNameObj.SIDEBAR_CONTAINER);
+  const $page = document.createElement('div');
+  $page.setAttribute('id', idNameObj.SIDEBAR_CONTAINER);
 
   let isInit = false;
 

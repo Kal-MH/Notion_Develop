@@ -1,15 +1,20 @@
-import { classNameObj, styleObj, idNameObj, ERROR_NEW_KEYWORD_MISSING } from "../utils/constants.js";
-import { hasNewTarget } from "../utils/error.js";
-import { routeCreateDocument } from "../utils/router.js";
+import {
+  classNameObj,
+  styleObj,
+  idNameObj,
+  ERROR_NEW_KEYWORD_MISSING,
+} from '../utils/constants.js';
+import { hasNewTarget } from '../utils/error.js';
+import { routeCreateDocument } from '../utils/router.js';
 
 const { TITLE, DOCUMENT_BLOCK_INNER, NEW_BTN } = classNameObj;
-const DOCUMENT_HEADER_CONTENT = "Notion";
+const DOCUMENT_HEADER_CONTENT = 'Notion';
 
 export default function DocumentHeader({ $target }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
-  const $header = document.createElement("div");
-  $header.setAttribute("id", idNameObj.SIDEBAR_HEADER);
+  const $header = document.createElement('div');
+  $header.setAttribute('id', idNameObj.SIDEBAR_HEADER);
   $target.appendChild($header);
 
   const CONTENT = DOCUMENT_HEADER_CONTENT;
@@ -26,7 +31,7 @@ export default function DocumentHeader({ $target }) {
 
   this.render();
 
-  $header.querySelector(`.${NEW_BTN}`).addEventListener("click", () => {
+  $header.querySelector(`.${NEW_BTN}`).addEventListener('click', () => {
     routeCreateDocument({ id: null });
   });
 }

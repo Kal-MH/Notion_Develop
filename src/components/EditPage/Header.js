@@ -1,12 +1,17 @@
-import { ERROR_NEW_KEYWORD_MISSING, DEFAULT_TITLE, DISABLED_ID, ROOT_TITLE } from "../utils/constants.js";
-import { hasId, hasNewTarget, hasTitle } from "../utils/error.js";
-import { setHeaderChange } from "../utils/router.js";
-import { classNameObj } from "../utils/constants.js";
+import {
+  ERROR_NEW_KEYWORD_MISSING,
+  DEFAULT_TITLE,
+  DISABLED_ID,
+  ROOT_TITLE,
+} from '../utils/constants.js';
+import { hasId, hasNewTarget, hasTitle } from '../utils/error.js';
+import { setHeaderChange } from '../utils/router.js';
+import { classNameObj } from '../utils/constants.js';
 
 export default function Header({ $target, initialState, onEditing }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
-  const $header = document.createElement("header");
+  const $header = document.createElement('header');
   $target.appendChild($header);
 
   const isValidState = (state) => {
@@ -14,7 +19,7 @@ export default function Header({ $target, initialState, onEditing }) {
     return true;
   };
 
-  this.state = isValidState(initialState) ? initialState : { title: "" };
+  this.state = isValidState(initialState) ? initialState : { title: '' };
 
   this.setState = (nextState) => {
     if (!isValidState(nextState)) return;
@@ -22,10 +27,10 @@ export default function Header({ $target, initialState, onEditing }) {
     this.state = nextState;
 
     const { title } = this.state;
-    const input = $header.querySelector("input");
+    const input = $header.querySelector('input');
 
     if (!title || title === DEFAULT_TITLE || title === ROOT_TITLE) {
-      input.value = "";
+      input.value = '';
       input.placeholder = !title ? DEFAULT_TITLE : title;
     } else {
       input.value = title;
@@ -38,7 +43,9 @@ export default function Header({ $target, initialState, onEditing }) {
     const { title } = this.state;
     $header.innerHTML = `
       <div class="${classNameObj.INPUT_WRAPPER}">
-        <input type="text"${!title.length ? `placeholder="${DEFAULT_TITLE}"` : `value="${title}"`}/>
+        <input type="text"${
+          !title.length ? `placeholder="${DEFAULT_TITLE}"` : `value="${title}"`
+        }/>
       </div>
     `;
   };
@@ -46,7 +53,7 @@ export default function Header({ $target, initialState, onEditing }) {
   const init = () => {
     this.render();
 
-    $header.addEventListener("input", (e) => {
+    $header.addEventListener('input', (e) => {
       const { value } = e.target;
 
       setHeaderChange({
@@ -57,10 +64,10 @@ export default function Header({ $target, initialState, onEditing }) {
       onEditing(value);
     });
 
-    $header.querySelector("input").addEventListener("focus", (e) => {
+    $header.querySelector('input').addEventListener('focus', (e) => {
       const { value } = e.target;
 
-      e.target.placeholder = "";
+      e.target.placeholder = '';
 
       setHeaderChange({
         id: this.state.id,

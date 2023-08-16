@@ -2,26 +2,26 @@ import {
   DISABLED_ID,
   ERROR_NEW_KEYWORD_MISSING,
   idNameObj,
-} from "../utils/constants.js";
-import { hasNewTarget } from "../utils/error.js";
-import { routePutDocument } from "../utils/router.js";
-import Editor from "./Editor.js";
-import Header from "./Header.js";
-import Topbar from "./Topbar.js";
+} from '../utils/constants.js';
+import { hasNewTarget } from '../utils/error.js';
+import { routePutDocument } from '../utils/router.js';
+import Editor from './Editor.js';
+import Header from './Header.js';
+import Topbar from './Topbar.js';
 
 export default function EditPage({ $target, initialState }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
-  const $page = document.createElement("div");
-  $page.setAttribute("id", idNameObj.EDITOR_CONTAINER);
+  const $page = document.createElement('div');
+  $page.setAttribute('id', idNameObj.EDITOR_CONTAINER);
 
   let isInit = false;
   let timer = null;
 
   this.state = initialState || {
     id: DISABLED_ID,
-    title: "",
-    content: "",
+    title: '',
+    content: '',
   };
 
   const topbar = new Topbar({

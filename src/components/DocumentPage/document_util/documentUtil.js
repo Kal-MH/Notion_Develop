@@ -1,5 +1,11 @@
-import { setItem } from "../../utils/storage.js";
-import { classNameObj, styleObj, DEFAULT_TITLE, DEFAULT_ID, LOCAL_STORAGE_DISPLAY } from "../../utils/constants.js";
+import { setItem } from '../../utils/storage.js';
+import {
+  classNameObj,
+  styleObj,
+  DEFAULT_TITLE,
+  DEFAULT_ID,
+  LOCAL_STORAGE_DISPLAY,
+} from '../../utils/constants.js';
 
 //constants
 const {
@@ -53,7 +59,9 @@ const addNewDocumentBlock = (documentListBlock, paddingLeft) => {
     ${createNewHTML(innerTags.substring(0, innerTags.length - 5), {
       id: DEFAULT_ID,
       title: DEFAULT_TITLE,
-      padding: parseInt(paddingLeft.substring(0, paddingLeft.length - 2)) + PADDING_INCREMENT,
+      padding:
+        parseInt(paddingLeft.substring(0, paddingLeft.length - 2)) +
+        PADDING_INCREMENT,
     })}
     </div>
   `;
@@ -69,14 +77,20 @@ const addNewDocumentList = (id, documentListAddBlock, paddingLeft) => {
     ${createNewHTML(origin, {
       id: DEFAULT_ID,
       title: DEFAULT_TITLE,
-      padding: parseInt(paddingLeft.substring(0, paddingLeft.length - 2)) + PADDING_INCREMENT,
+      padding:
+        parseInt(paddingLeft.substring(0, paddingLeft.length - 2)) +
+        PADDING_INCREMENT,
     })}
     </div>
   `;
 };
 
 //public method
-export const createDocumentSection = (parentDocument, padding, openDocumentsList) => {
+export const createDocumentSection = (
+  parentDocument,
+  padding,
+  openDocumentsList,
+) => {
   const { id, title, documents } = parentDocument;
 
   if (id && title !== undefined) {
@@ -86,15 +100,21 @@ export const createDocumentSection = (parentDocument, padding, openDocumentsList
       ${
         documents.length
           ? `
-              <div data-id="${id}" class="${DOCUMENT_LIST_BLOCK} ${openDocumentsList[id] ? "block" : "none"}">
+              <div data-id="${id}" class="${DOCUMENT_LIST_BLOCK} ${
+                openDocumentsList[id] ? 'block' : 'none'
+              }">
                     ${documents
                       .map((document) =>
-                        createDocumentSection(document, padding + PADDING_INCREMENT, openDocumentsList)
+                        createDocumentSection(
+                          document,
+                          padding + PADDING_INCREMENT,
+                          openDocumentsList,
+                        ),
                       )
-                      .join("")}
+                      .join('')}
               </div>
             `
-          : ""
+          : ''
       }
     </div>
     `;
@@ -102,26 +122,30 @@ export const createDocumentSection = (parentDocument, padding, openDocumentsList
 };
 
 export const sidebarDisplayBtnClick = (id, target, openDocumentsList) => {
-  const documentListBlock = target.closest(`.${DOCUMENT_SECTION}`).querySelector(`.${DOCUMENT_LIST_BLOCK}`);
+  const documentListBlock = target
+    .closest(`.${DOCUMENT_SECTION}`)
+    .querySelector(`.${DOCUMENT_LIST_BLOCK}`);
 
   if (!documentListBlock) return;
 
   const { classList } = documentListBlock;
 
-  if (classList.contains("none")) {
+  if (classList.contains('none')) {
     openDocumentsList[id] = true;
-    classList.remove("none");
-    classList.add("block");
+    classList.remove('none');
+    classList.add('block');
   } else {
     openDocumentsList[id] = false;
-    classList.remove("block");
-    classList.add("none");
+    classList.remove('block');
+    classList.add('none');
   }
   setItem(LOCAL_STORAGE_DISPLAY, openDocumentsList);
 };
 
 export const sidebarNewDocumentBtnClick = (id, target) => {
-  const documentListBlock = target.closest(`.${DOCUMENT_SECTION}`).querySelector(`.${DOCUMENT_LIST_BLOCK}`);
+  const documentListBlock = target
+    .closest(`.${DOCUMENT_SECTION}`)
+    .querySelector(`.${DOCUMENT_LIST_BLOCK}`);
   const { paddingLeft } = target.closest(`.${DOCUMENT_BLOCK_INNER}`).style;
 
   if (documentListBlock) {

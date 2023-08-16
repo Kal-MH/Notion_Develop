@@ -11,9 +11,9 @@ Variables
   --font-color-2: rgba(25, 23, 17, 0.85);
   --header-color: rgb(55, 53, 47);
   --btn-color: #949087;
-  --display-icon: "\f054";
-  --remove-icon: "\f1f8";
-  --new-icon: "\2b";
+  --display-icon: '\f054';
+  --remove-icon: '\f1f8';
+  --new-icon: '\2b';
   --scrollbar-thumb: #d3d1cb;
   --scrollbar-track: #edece9;
 }
