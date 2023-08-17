@@ -1,11 +1,6 @@
-import {
-  classNameObj,
-  styleObj,
-  idNameObj,
-  ERROR_NEW_KEYWORD_MISSING,
-} from '../utils/constants.js';
-import { hasNewTarget } from '../utils/error.js';
-import { routeCreateDocument } from '../utils/router.js';
+import { classNameObj, styleObj, idNameObj } from '../../utils/constants.ts';
+import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../../utils/error.ts';
+import { routeCreateDocument } from '../../utils/router.ts';
 
 const { TITLE, NEW_BTN, DOCUMENT_BLOCK_INNER } = classNameObj;
 const DOCUMENT_FOOTER_CONTENT = 'New Doc';

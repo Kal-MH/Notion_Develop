@@ -1,11 +1,11 @@
-import { setItem } from '../../utils/storage.js';
+import { setItem } from '../../../utils/storage.js';
 import {
   classNameObj,
   styleObj,
   DEFAULT_TITLE,
   DEFAULT_ID,
   LOCAL_STORAGE_DISPLAY,
-} from '../../utils/constants.js';
+} from '../../../utils/constants.ts';
 
 //constants
 const {

@@ -1,9 +1,9 @@
-import { hasId, hasNewTarget } from '../utils/error.js';
 import {
-  DISABLED_ID,
   ERROR_NEW_KEYWORD_MISSING,
-  classNameObj,
-} from '../utils/constants.js';
+  hasId,
+  hasNewTarget,
+} from '../../utils/error.ts';
+import { DISABLED_ID, classNameObj } from '../../utils/constants.ts';
 import DeleteButton from '../Button/DeleteButton.js';
 
 export default function Topbar({ $target, initialState }) {

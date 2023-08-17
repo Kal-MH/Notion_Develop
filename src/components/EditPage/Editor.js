@@ -1,10 +1,13 @@
-import { hasContent, hasNewTarget } from '../utils/error.js';
+import {
+  ERROR_NEW_KEYWORD_MISSING,
+  hasContent,
+  hasNewTarget,
+} from '../../utils/error.ts';
 import {
   classNameObj,
   DEFAULT_CONTENT,
   DISABLED_ID,
-  ERROR_NEW_KEYWORD_MISSING,
-} from '../utils/constants.js';
+} from '../../utils/constants.ts';
 
 export default function Editor({ $target, initialState, onEditing }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);

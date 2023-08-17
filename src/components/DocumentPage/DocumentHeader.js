@@ -1,13 +1,7 @@
-import {
-  classNameObj,
-  styleObj,
-  idNameObj,
-  ERROR_NEW_KEYWORD_MISSING,
-} from '../utils/constants.js';
-import { hasNewTarget } from '../utils/error.js';
-import { routeCreateDocument } from '../utils/router.js';
+import { classNameObj, styleObj, idNameObj } from '../../utils/constants.ts';
+import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../../utils/error.ts';
 
-const { TITLE, DOCUMENT_BLOCK_INNER, NEW_BTN } = classNameObj;
+const { TITLE, DOCUMENT_BLOCK_INNER } = classNameObj;
 const DOCUMENT_HEADER_CONTENT = 'Notion';
 
 export default function DocumentHeader({ $target }) {
@@ -24,14 +18,9 @@ export default function DocumentHeader({ $target }) {
     $header.innerHTML = `
       <div class="${DOCUMENT_BLOCK_INNER}" style="padding: 2px 10px 2px ${DEFAULT_PADDING}px">
         <div class="${TITLE}"> ${CONTENT} </div>
-        <div class="${NEW_BTN}"></div>
       </div>
     `;
   };
 
   this.render();
-
-  $header.querySelector(`.${NEW_BTN}`).addEventListener('click', () => {
-    routeCreateDocument({ id: null });
-  });
 }

@@ -1,17 +1,20 @@
 import {
   classNameObj,
-  ERROR_NEW_KEYWORD_MISSING,
   LOCAL_STORAGE_DISPLAY,
   SLASH_DOCUMENTS,
   styleObj,
-} from '../utils/constants.js';
-import { hasNewTarget, isValidArray } from '../utils/error.js';
+} from '../../utils/constants.ts';
+import {
+  ERROR_NEW_KEYWORD_MISSING,
+  hasNewTarget,
+  isValidArray,
+} from '../../utils/error.ts';
 import {
   routeCreateDocument,
   routePush,
   routeRemoveDocument,
-} from '../utils/router.js';
-import { getItem, setItem } from '../utils/storage.js';
+} from '../../utils/router.ts';
+import { getItem, setItem } from '../../utils/storage.js';
 import {
   sidebarNewDocumentBtnClick,
   sidebarDisplayBtnClick,

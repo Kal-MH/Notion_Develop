@@ -1,10 +1,6 @@
-import {
-  DISABLED_ID,
-  ERROR_NEW_KEYWORD_MISSING,
-  idNameObj,
-} from '../utils/constants.js';
-import { hasNewTarget } from '../utils/error.js';
-import { routePutDocument } from '../utils/router.js';
+import { DISABLED_ID, idNameObj } from '../../utils/constants.ts';
+import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../../utils/error.ts';
+import { routePutDocument } from '../../utils/router.ts';
 import Editor from './Editor.js';
 import Header from './Header.js';
 import Topbar from './Topbar.js';

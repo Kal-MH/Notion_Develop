@@ -52,11 +52,7 @@ export const styleObj = {
   PADDING_INCREMENT: 20,
 };
 
-//error
-export const ERROR_NEW_KEYWORD_MISSING = 'Error: missing new keyword';
-export const ERROR_API_CALL = 'Error: Api call';
-
-//localstorage
+//local storage
 export const LOCAL_STORAGE_DISPLAY = 'display';
 
 //event

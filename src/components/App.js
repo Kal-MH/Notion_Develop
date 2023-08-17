@@ -2,15 +2,14 @@ import {
   DEFAULT_STATE,
   DEFAULT_TITLE,
   DISABLED_ID,
-  ERROR_NEW_KEYWORD_MISSING,
   REMOVED_DOC_STATE,
   SLASH_DOCUMENTS,
-} from './utils/constants.js';
-import { hasNewTarget } from './utils/error.js';
+} from '../utils/constants.ts';
+import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../utils/error.ts';
 import DocumentPage from './DocumentPage/DocumentPage.js';
 import EditPage from './EditPage/EditPage.js';
-import { request } from '../api/api.js';
-import { initRouter } from './utils/router.js';
+import { initRouter } from '../utils/router.ts';
+import { getPostAll, getPostOne } from '../api/post.ts';
 
 export default function App({ $target }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
@@ -31,14 +30,14 @@ export default function App({ $target }) {
 
   this.route = async () => {
     const { pathname } = location;
-    const documentsList = await request(`${SLASH_DOCUMENTS}`);
+    const documentsList = await getPostAll();
 
     documentPage.setState(documentsList);
     if (pathname === '/') {
       editPage.setState(DEFAULT_STATE);
     } else if (pathname.indexOf(`${SLASH_DOCUMENTS}`) === 0) {
       const [, , documentId] = pathname.split('/');
-      const document = await request(`${SLASH_DOCUMENTS}/${documentId}`);
+      const document = await getPostOne(documentId);
 
       if (document) {
         editPage.setState({ ...document });

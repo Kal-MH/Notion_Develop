@@ -1,5 +1,9 @@
-import { ERROR_NEW_KEYWORD_MISSING, idNameObj } from '../utils/constants.js';
-import { hasNewTarget, isValidArray } from '../utils/error.js';
+import { idNameObj } from '../../utils/constants.ts';
+import {
+  ERROR_NEW_KEYWORD_MISSING,
+  hasNewTarget,
+  isValidArray,
+} from '../../utils/error.ts';
 import DocumentFooter from './DocumentFooter.js';
 import DocumentHeader from './DocumentHeader.js';
 import Documents from './Documents.js';

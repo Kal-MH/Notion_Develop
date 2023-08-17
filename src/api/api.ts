@@ -1,7 +1,9 @@
-import { ERROR_API_CALL } from '../components/utils/constants.js';
-import { API_END_POINT, USERNAME } from './api_constant.js';
+import { ERROR_API_CALL } from '../utils/error.ts';
 
-export const request = async (url, options = {}) => {
+const API_END_POINT = 'https://kdt-frontend.programmers.co.kr';
+const USERNAME = 'kal';
+
+export const request = async (url: string, options = {}) => {
   try {
     const res = await fetch(`${API_END_POINT}${url}`, {
       ...options,
@@ -16,7 +18,8 @@ export const request = async (url, options = {}) => {
     }
 
     throw new Error(ERROR_API_CALL);
-  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
     throw new Error(e);
   }
 };

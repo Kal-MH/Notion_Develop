@@ -1,6 +1,10 @@
-import { hasNewTarget, hasId } from '../utils/error.js';
-import { DISABLED_ID, ERROR_NEW_KEYWORD_MISSING } from '../utils/constants.js';
-import { routeRemoveDocument } from '../utils/router.js';
+import {
+  hasNewTarget,
+  hasId,
+  ERROR_NEW_KEYWORD_MISSING,
+} from '../../utils/error.ts';
+import { DISABLED_ID } from '../../utils/constants.ts';
+import { routeRemoveDocument } from '../../utils/router.ts';
 
 export default function DeleteButton({ $target, initialState }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
@@ -31,6 +35,7 @@ export default function DeleteButton({ $target, initialState }) {
   $button.addEventListener('click', async () => {
     const { id, parentId } = this.state;
 
-    routeRemoveDocument({ id, parentId });
+    const removedConfirmValue = confirm('해당 문서를 삭제하시겠습니까?');
+    removedConfirmValue && routeRemoveDocument({ id, parentId });
   });
 }

@@ -1,38 +1,39 @@
-import { request } from '../../api/api.js';
+import { request } from '../api/api.ts';
+import { deletePost, getPostOne, postNewPost } from '../api/post.ts';
+import { DocumentType } from '../types/document.ts';
 import {
   classNameObj,
-  DEFAULT_TITLE,
   EVENT_HEADER_CHANGE,
   EVENT_ROUTE_PUSH,
   EVENT_ROUTE_CREATE,
   EVENT_ROUTE_PUT,
   EVENT_ROUTE_REMOVE,
   SLASH_DOCUMENTS,
-} from './constants.js';
+} from './constants.ts';
 
 const { DOCUMENT_BLOCK, TITLE } = classNameObj;
 
-export const initRouter = (onRoute) => {
-  const removeAllDocument = async (document) => {
+type onRouteType = () => void;
+
+export const initRouter = (onRoute: onRouteType) => {
+  const removeAllDocument = async (document: DocumentType) => {
     for (const subDocument of document.documents) {
       removeAllDocument(subDocument);
     }
 
-    await request(`${SLASH_DOCUMENTS}/${document.id}`, {
-      method: 'DELETE',
-    });
+    await deletePost(document.id);
   };
 
   //event handlers
   window.addEventListener('popstate', () => onRoute());
 
   window.addEventListener(EVENT_ROUTE_PUSH, (e) => {
-    const { nextUrl, parentId } = e.detail;
+    const { nextUrl } = e.detail;
 
     if (!nextUrl) return;
 
     history.pushState(null, null, nextUrl);
-    onRoute({ parentId });
+    onRoute();
   });
 
   window.addEventListener(EVENT_ROUTE_REMOVE, async (e) => {
@@ -40,7 +41,7 @@ export const initRouter = (onRoute) => {
 
     if (!id) return;
 
-    const removedDocument = await request(`${SLASH_DOCUMENTS}/${id}`);
+    const removedDocument = await getPostOne(id);
 
     await removeAllDocument(removedDocument);
 
@@ -50,15 +51,7 @@ export const initRouter = (onRoute) => {
   window.addEventListener(EVENT_ROUTE_CREATE, async (e) => {
     const { id } = e.detail;
 
-    const createNewDocument = await request(`${SLASH_DOCUMENTS}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        title: DEFAULT_TITLE,
-        content: '',
-        parent: id,
-      }),
-    });
-    // console.log(createNewDocument);
+    const createNewDocument = await postNewPost(id);
 
     routePush(`${SLASH_DOCUMENTS}/${createNewDocument.id}`, id);
   });
@@ -78,27 +71,37 @@ export const initRouter = (onRoute) => {
   window.addEventListener(EVENT_HEADER_CHANGE, (e) => {
     const { id, title } = e.detail;
 
-    const documentBlockList = e.target.document.body.querySelectorAll(
+    const documentBlockList = window.document.body.querySelectorAll(
       `.${DOCUMENT_BLOCK}`,
     );
     let currentDocumentBlock = null;
 
     documentBlockList.forEach((e) => {
-      const dataId = e.dataset.id;
+      const dataId = (e as HTMLElement).dataset.id;
 
-      if (parseInt(dataId) === id) {
+      if (dataId && parseInt(dataId) === id) {
         currentDocumentBlock = e;
       }
     });
 
     if (!currentDocumentBlock) return;
 
-    const currentTitleBlock = currentDocumentBlock.querySelector(`.${TITLE}`);
-    currentTitleBlock.innerText = title;
+    const currentTitleBlock = (
+      currentDocumentBlock as HTMLElement
+    ).querySelector(`.${TITLE}`);
+    if (currentTitleBlock) {
+      (currentTitleBlock as HTMLElement).textContent = title || null;
+    }
   });
 };
 
-export const setHeaderChange = ({ id, title }) => {
+export const setHeaderChange = ({
+  id,
+  title,
+}: {
+  id: number;
+  title?: string;
+}) => {
   window.dispatchEvent(
     new CustomEvent(EVENT_HEADER_CHANGE, {
       detail: {
@@ -109,7 +112,7 @@ export const setHeaderChange = ({ id, title }) => {
   );
 };
 
-export const routePush = (nextUrl, parentId) => {
+export const routePush = (nextUrl?: string, parentId?: number) => {
   window.dispatchEvent(
     new CustomEvent(EVENT_ROUTE_PUSH, {
       detail: {
@@ -120,7 +123,13 @@ export const routePush = (nextUrl, parentId) => {
   );
 };
 
-export const routeRemoveDocument = ({ id, parentId }) => {
+export const routeRemoveDocument = ({
+  id,
+  parentId,
+}: {
+  id: number;
+  parentId?: number;
+}) => {
   window.dispatchEvent(
     new CustomEvent(EVENT_ROUTE_REMOVE, {
       detail: {
@@ -131,7 +140,7 @@ export const routeRemoveDocument = ({ id, parentId }) => {
   );
 };
 
-export const routeCreateDocument = ({ id }) => {
+export const routeCreateDocument = ({ id }: { id: number }) => {
   window.dispatchEvent(
     new CustomEvent(EVENT_ROUTE_CREATE, {
       detail: {
@@ -141,7 +150,15 @@ export const routeCreateDocument = ({ id }) => {
   );
 };
 
-export const routePutDocument = ({ id, title, content }) => {
+export const routePutDocument = ({
+  id,
+  title,
+  content,
+}: {
+  id: number;
+  title?: string;
+  content?: string;
+}) => {
   window.dispatchEvent(
     new CustomEvent(EVENT_ROUTE_PUT, {
       detail: {
