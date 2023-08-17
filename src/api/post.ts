@@ -40,8 +40,8 @@ export const postNewPost = async (id: number | null) => {
 
 export const updatePost = async (
   id: number,
-  title: string,
-  content: string,
+  title?: string,
+  content?: string,
 ) => {
   try {
     await request(`${SLASH_DOCUMENTS}/${id}`, {

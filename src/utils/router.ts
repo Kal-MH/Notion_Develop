@@ -1,5 +1,9 @@
-import { request } from '../api/api.ts';
-import { deletePost, getPostOne, postNewPost } from '../api/post.ts';
+import {
+  deletePost,
+  getPostOne,
+  postNewPost,
+  updatePost,
+} from '../api/post.ts';
 import { DocumentType } from '../types/document.ts';
 import {
   classNameObj,
@@ -41,31 +45,39 @@ export const initRouter = (onRoute: onRouteType) => {
 
     if (!id) return;
 
-    const removedDocument = await getPostOne(id);
+    try {
+      const removedDocument = await getPostOne(id);
 
-    await removeAllDocument(removedDocument);
+      await removeAllDocument(removedDocument);
 
-    routePush(`${parentId ? `${SLASH_DOCUMENTS}/${parentId}` : '/'}`);
+      routePush(`${parentId ? `${SLASH_DOCUMENTS}/${parentId}` : '/'}`);
+    } catch (e: unknown) {
+      console.error(e);
+      routePush('/');
+    }
   });
 
   window.addEventListener(EVENT_ROUTE_CREATE, async (e) => {
     const { id } = e.detail;
 
-    const createNewDocument = await postNewPost(id);
+    try {
+      const createNewDocument = await postNewPost(id);
 
-    routePush(`${SLASH_DOCUMENTS}/${createNewDocument.id}`, id);
+      routePush(`${SLASH_DOCUMENTS}/${createNewDocument.id}`, id);
+    } catch (e: unknown) {
+      console.error(e);
+      routePush(`${SLASH_DOCUMENTS}/${id}`);
+    }
   });
 
   window.addEventListener(EVENT_ROUTE_PUT, async (e) => {
     const { id, title, content } = e.detail;
 
-    await request(`${SLASH_DOCUMENTS}/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        title,
-        content,
-      }),
-    });
+    try {
+      await updatePost(id, title, content);
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   window.addEventListener(EVENT_HEADER_CHANGE, (e) => {
