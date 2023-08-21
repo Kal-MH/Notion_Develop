@@ -48,7 +48,7 @@ export const classNameObj = {
 };
 
 export const styleObj = {
-  DEFAULT_PADDING: 15,
+  DEFAULT_PADDING: 5,
   PADDING_INCREMENT: 20,
 };
 

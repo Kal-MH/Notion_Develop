@@ -72,6 +72,7 @@
 - 기술 스택: Vanilla Javascript
 
 ### 유의사항
+
 그렙의 프로그래머스 프론트엔드 데브코스 교욱 과정 중에 진행한 프로젝트를 개인 레포지토리로 옮겨온 터라, 리팩토링 과정을 제외한 이전 커밋 기록이 없습니다.
 해당 링크를 통해 이전 커밋 기록까지 확인할 수 있습니다. [랑크](https://github.com/prgrms-fe-devcourse/FEDC3-4_Project_Notion_VanillaJS/pull/10)
 
@@ -80,7 +81,9 @@
 ![Simple Notion](https://github.com/Kal-MH/Notion_Develop/assets/59648372/a03227c1-b7b4-4ff6-8f79-782616e277de)
 
 ## 리팩토링
+
 일시: 2023.08.15 ~ (현재 진행중)
 
 1. typescript 마이그레이션
 2. api 메서드 관심사 분리 및 호출에 따른 에러 처리 추가
+3. Documents HTML 시맨틱 요소로 변경 및 사이드바 문서 펼침 버튼 클릭시 애니메이션 추가

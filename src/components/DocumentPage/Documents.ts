@@ -101,6 +101,9 @@ export default function Documents(
       routePush(`${SLASH_DOCUMENTS}/${id}`, parentId);
     } else if (classList[0] === DISPLAY_BTN) {
       sidebarDisplayBtnClick(id, element, openDocumentsList);
+      if (Array.from(element.classList).includes('clicked'))
+        element.classList.remove('clicked');
+      else element.classList.add('clicked');
     } else if (classList[0] === NEW_BTN) {
       //낙관적 업데이트
       sidebarNewDocumentBtnClick(id, element);

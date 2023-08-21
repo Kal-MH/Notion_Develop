@@ -213,6 +213,7 @@ SIDEBAR_PAGE
   width: 20px;
   height: 20px;
   padding-top: 2px;
+  margin-right: 2px;
 }
 
 #sidebar-list-container .document-block-inner .btn-wrapper {
@@ -242,7 +243,14 @@ SIDEBAR_PAGE
   content: var(--display-icon);
   font-weight: 500;
   color: var(--btn-color);
-  transform: rotateZ(0deg);
+  transform: rotate(0);
+  transition: transform 0.2s ease-in;
+}
+
+#sidebar-list-container .document-block-inner .display-btn.clicked::before {
+  content: var(--display-icon);
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in;
 }
 
 #sidebar-list-container .document-block-inner .remove-btn::after {

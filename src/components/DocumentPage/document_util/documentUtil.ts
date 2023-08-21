@@ -29,18 +29,18 @@ type DocumentArgsType = { id: number; title: string; padding: number };
 //private method
 const createDocumentBlock = (id: number, title: string, padding: number) => {
   return `
-    <div data-id=${id} class="${DOCUMENT_BLOCK}">
+    <li data-id=${id} class="${DOCUMENT_BLOCK}">
       <div class="${DOCUMENT_BLOCK_INNER}" style="padding: 2px 10px 2px ${padding}px">
-        <div class="${DISPLAY_BTN}"></div>
+        <button class="${DISPLAY_BTN}"></button>
         <div class="${TITLE_WRAPPER}">
-          <div class="${TITLE}">${title || DEFAULT_TITLE}</div>
+          <p class="${TITLE}">${title || DEFAULT_TITLE}</p>
         </div>
         <div class="${BTN_WRAPPER}">
-          <div class="${REMOVE_BTN}"></div>
-          <div class="${NEW_BTN}"></div>
+          <button class="${REMOVE_BTN}"></button>
+          <button class="${NEW_BTN}"></button>
         </div>
       </div>
-    </div>
+    </li>
   `;
 };
 
@@ -102,12 +102,12 @@ export const createDocumentSection = (
   if (!id || title === undefined) return '';
 
   return `
-  <div class="${DOCUMENT_SECTION}">
+  <ul class="${DOCUMENT_SECTION}">
     ${createDocumentBlock(id, title, padding)}
     ${
       documents.length
         ? `
-            <div data-id="${id}" class="${DOCUMENT_LIST_BLOCK} ${
+            <li data-id="${id}" class="${DOCUMENT_LIST_BLOCK} ${
               openDocumentsList[id] ? 'block' : 'none'
             }">
                   ${documents
@@ -119,11 +119,11 @@ export const createDocumentSection = (
                       ),
                     )
                     .join('')}
-            </div>
+            </li>
           `
         : ''
     }
-  </div>
+  </ul>
   `;
 };
 
