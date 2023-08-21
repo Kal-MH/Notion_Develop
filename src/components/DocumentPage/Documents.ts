@@ -121,7 +121,9 @@ export default function Documents(
 
       routeCreateDocument({ id });
     } else if (classList[0] === REMOVE_BTN) {
-      routeRemoveDocument({ id, parentId });
+      const userConfirm = confirm('문서를 삭제하시겠습니까?');
+
+      userConfirm && routeRemoveDocument({ id, parentId });
     }
   });
 }
