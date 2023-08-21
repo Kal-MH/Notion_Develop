@@ -1,18 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DISABLED_ID, idNameObj } from '../../utils/constants.ts';
 import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../../utils/error.ts';
 import { routePutDocument } from '../../utils/router.ts';
-import Editor from './Editor.js';
-import Header from './Header.js';
-import Topbar from './Topbar.js';
+import Editor from './Editor.ts';
+import Header from './Header.ts';
+import Topbar from './Topbar.ts';
 
-export default function EditPage({ $target, initialState }) {
+export default function EditPage(
+  this: any,
+  { $target, initialState }: { $target: HTMLElement; initialState: object },
+) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
   const $page = document.createElement('div');
   $page.setAttribute('id', idNameObj.EDITOR_CONTAINER);
 
   let isInit = false;
-  let timer = null;
+  let timer: ReturnType<typeof setTimeout> | null = null;
 
   this.state = initialState || {
     id: DISABLED_ID,
@@ -20,18 +24,18 @@ export default function EditPage({ $target, initialState }) {
     content: '',
   };
 
-  const topbar = new Topbar({
+  const topbar = new (Topbar as any)({
     $target: $page,
     initialState: {},
   });
 
-  const header = new Header({
+  const header = new (Header as any)({
     $target: $page,
     initialState: {
       id: this.state.id,
       title: this.state.title,
     },
-    onEditing: (title) => {
+    onEditing: (title: string) => {
       this.setState({
         ...this.state,
         title,
@@ -41,12 +45,12 @@ export default function EditPage({ $target, initialState }) {
     },
   });
 
-  const editor = new Editor({
+  const editor = new (Editor as any)({
     $target: $page,
     initialState: {
       content: this.state.content,
     },
-    onEditing: (content) => {
+    onEditing: (content: string) => {
       this.setState({
         ...this.state,
         content,
@@ -56,7 +60,7 @@ export default function EditPage({ $target, initialState }) {
     },
   });
 
-  this.setState = (nextState) => {
+  this.setState = (nextState: object) => {
     if (!nextState) return;
 
     this.state = nextState;
@@ -77,7 +81,7 @@ export default function EditPage({ $target, initialState }) {
     $target.appendChild($page);
   };
 
-  const autoSaveDocument = ({ delay }) => {
+  const autoSaveDocument = ({ delay }: { delay: number }) => {
     if (timer !== null) {
       clearTimeout(timer);
     }

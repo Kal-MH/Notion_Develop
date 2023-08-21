@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   DEFAULT_STATE,
   DEFAULT_TITLE,
@@ -7,19 +8,19 @@ import {
 } from '../utils/constants.ts';
 import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../utils/error.ts';
 import DocumentPage from './DocumentPage/DocumentPage.ts';
-import EditPage from './EditPage/EditPage.js';
+import EditPage from './EditPage/EditPage.ts';
 import { initRouter } from '../utils/router.ts';
 import { getPostAll, getPostOne } from '../api/post.ts';
 
-export default function App({ $target }) {
+export default function App(this: any, { $target }: { $target: HTMLElement }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
-  const documentPage = new DocumentPage({
+  const documentPage = new (DocumentPage as any)({
     $target,
     initialState: [],
   });
 
-  const editPage = new EditPage({
+  const editPage = new (EditPage as any)({
     $target,
     initialState: {
       id: DISABLED_ID,
@@ -37,7 +38,7 @@ export default function App({ $target }) {
       editPage.setState(DEFAULT_STATE);
     } else if (pathname.indexOf(`${SLASH_DOCUMENTS}`) === 0) {
       const [, , documentId] = pathname.split('/');
-      const document = await getPostOne(documentId);
+      const document = await getPostOne(parseInt(documentId));
 
       if (document) {
         editPage.setState({ ...document });
