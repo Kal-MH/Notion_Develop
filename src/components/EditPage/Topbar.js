@@ -4,7 +4,6 @@ import {
   hasNewTarget,
 } from '../../utils/error.ts';
 import { DISABLED_ID, classNameObj } from '../../utils/constants.ts';
-import DeleteButton from '../Button/DeleteButton.js';
 
 export default function Topbar({ $target, initialState }) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
@@ -20,15 +19,9 @@ export default function Topbar({ $target, initialState }) {
 
   this.state = isValidState(initialState) ? initialState : { id: DISABLED_ID };
 
-  const deleteBtn = new DeleteButton({
-    $target: $topbar,
-    initialState: {},
-  });
-
   this.setState = (nextState) => {
     if (!nextState) return;
 
     this.state = nextState;
-    deleteBtn.setState(this.state);
   };
 }

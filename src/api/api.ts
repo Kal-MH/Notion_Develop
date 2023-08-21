@@ -1,7 +1,7 @@
 import { ERROR_API_CALL } from '../utils/error.ts';
 
 const API_END_POINT = 'https://kdt-frontend.programmers.co.kr';
-const USERNAME = 'kal';
+const USERNAME = 'shin';
 
 export const request = async (url: string, options = {}) => {
   try {
@@ -18,8 +18,7 @@ export const request = async (url: string, options = {}) => {
     }
 
     throw new Error(ERROR_API_CALL);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    throw new Error(e);
+  } catch (e: unknown) {
+    throw new Error(e as string | undefined);
   }
 };
