@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { idNameObj } from '../../utils/constants.ts';
 import {
   ERROR_NEW_KEYWORD_MISSING,
   hasNewTarget,
   isValidArray,
 } from '../../utils/error.ts';
-import DocumentFooter from './DocumentFooter.js';
-import DocumentHeader from './DocumentHeader.js';
-import Documents from './Documents.js';
+import DocumentFooter from './DocumentFooter.ts';
+import DocumentHeader from './DocumentHeader.ts';
+import Documents from './Documents.ts';
 
-export default function DocumentPage({ $target, initialState }) {
+export default function DocumentPage(
+  this: any,
+  { $target, initialState }: { $target: HTMLElement; initialState: object },
+) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
   const $page = document.createElement('div');
@@ -16,23 +20,23 @@ export default function DocumentPage({ $target, initialState }) {
 
   let isInit = false;
 
-  const isValidState = (state) => {
+  const isValidState = (state: object) => {
     if (!state || !isValidArray(state)) return false;
     return true;
   };
 
   this.state = isValidState(initialState) ? initialState : [];
 
-  new DocumentHeader({ $target: $page });
+  new (DocumentHeader as any)({ $target: $page });
 
-  const documents = new Documents({
+  const documents = new (Documents as any)({
     $target: $page,
     initialState: this.state,
   });
 
-  new DocumentFooter({ $target: $page });
+  new (DocumentFooter as any)({ $target: $page });
 
-  this.setState = (nextState) => {
+  this.setState = (nextState: object) => {
     if (!isValidState(nextState)) return;
 
     this.state = nextState;

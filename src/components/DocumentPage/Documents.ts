@@ -1,3 +1,4 @@
+import { DocumentType } from '../../types/document';
 import {
   classNameObj,
   LOCAL_STORAGE_DISPLAY,
@@ -14,12 +15,12 @@ import {
   routePush,
   routeRemoveDocument,
 } from '../../utils/router.ts';
-import { getItem, setItem } from '../../utils/storage.js';
+import { getItem, setItem } from '../../utils/storage.ts';
 import {
   sidebarNewDocumentBtnClick,
   sidebarDisplayBtnClick,
   createDocumentSection,
-} from './document_util/documentUtil.js';
+} from './document_util/documentUtil.ts';
 
 //constants
 const {
@@ -35,7 +36,17 @@ const {
   SCROLLBAR,
 } = classNameObj;
 
-export default function Documents({ $target, initialState }) {
+export default function Documents(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  this: any,
+  {
+    $target,
+    initialState,
+  }: {
+    $target: HTMLElement;
+    initialState: object;
+  },
+) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
   const $sidebar = document.createElement('div');
@@ -43,7 +54,7 @@ export default function Documents({ $target, initialState }) {
   $sidebar.setAttribute('class', SCROLLBAR);
   $target.appendChild($sidebar);
 
-  const isValidState = (state) => {
+  const isValidState = (state: object) => {
     if (!state || !isValidArray(state)) return false;
     return true;
   };
@@ -52,10 +63,10 @@ export default function Documents({ $target, initialState }) {
 
   const openDocumentsList = getItem(
     LOCAL_STORAGE_DISPLAY,
-    new Map(this.state.map((document) => [document.id, false])),
+    new Map(this.state.map((document: DocumentType) => [document.id, false])),
   );
 
-  this.setState = (nextState) => {
+  this.setState = (nextState: object) => {
     if (!isValidState(nextState)) return;
 
     this.state = nextState;
@@ -65,7 +76,7 @@ export default function Documents({ $target, initialState }) {
   this.render = () => {
     $sidebar.innerHTML = `
       ${this.state
-        .map((rootDocument) =>
+        .map((rootDocument: DocumentType) =>
           createDocumentSection(
             rootDocument,
             styleObj.DEFAULT_PADDING,
@@ -79,19 +90,20 @@ export default function Documents({ $target, initialState }) {
   this.render();
 
   $sidebar.addEventListener('click', (e) => {
-    const { target } = e;
-    const { classList } = target;
-    const { id } = target.closest(`.${DOCUMENT_BLOCK}`).dataset;
-    const documentSection = target.closest(`.${DOCUMENT_SECTION}`);
-    const parentId = documentSection.parentNode.dataset.id;
+    const element = e.target as HTMLElement;
+    const { classList } = element;
+
+    const id = parseInt(element.closest(`.${DOCUMENT_BLOCK}`)?.dataset.id);
+    const documentSection = element.closest(`.${DOCUMENT_SECTION}`);
+    const parentId = documentSection?.parentNode?.dataset.id;
 
     if (classList[0] === TITLE || classList[0] === TITLE_WRAPPER) {
       routePush(`${SLASH_DOCUMENTS}/${id}`, parentId);
     } else if (classList[0] === DISPLAY_BTN) {
-      sidebarDisplayBtnClick(id, target, openDocumentsList);
+      sidebarDisplayBtnClick(id, element, openDocumentsList);
     } else if (classList[0] === NEW_BTN) {
       //낙관적 업데이트
-      sidebarNewDocumentBtnClick(id, target);
+      sidebarNewDocumentBtnClick(id, element);
 
       //펼침 적용
       if (documentSection) {
@@ -101,7 +113,7 @@ export default function Documents({ $target, initialState }) {
 
         openDocumentsList[id] = true;
         setItem(LOCAL_STORAGE_DISPLAY, openDocumentsList);
-        documentListBlock.style.display = 'block';
+        if (documentListBlock) documentListBlock.style.display = 'block';
       }
 
       routeCreateDocument({ id });

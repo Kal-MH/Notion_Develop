@@ -4,7 +4,11 @@ import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../../utils/error.ts';
 const { TITLE, DOCUMENT_BLOCK_INNER } = classNameObj;
 const DOCUMENT_HEADER_CONTENT = 'Notion';
 
-export default function DocumentHeader({ $target }) {
+export default function DocumentHeader(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  this: any,
+  { $target }: { $target: HTMLElement },
+) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
   const $header = document.createElement('div');

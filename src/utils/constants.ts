@@ -5,7 +5,7 @@ export const ROOT_TITLE = '작업 중... 💨';
 export const REMOVED_DOC_TITLE = '삭제된 문서입니다.';
 
 export const DISABLED_ID = -1;
-export const DEFAULT_ID = 'new';
+export const DEFAULT_ID = 0;
 
 //Default states
 export const DEFAULT_STATE = {

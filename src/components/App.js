@@ -6,7 +6,7 @@ import {
   SLASH_DOCUMENTS,
 } from '../utils/constants.ts';
 import { ERROR_NEW_KEYWORD_MISSING, hasNewTarget } from '../utils/error.ts';
-import DocumentPage from './DocumentPage/DocumentPage.js';
+import DocumentPage from './DocumentPage/DocumentPage.ts';
 import EditPage from './EditPage/EditPage.js';
 import { initRouter } from '../utils/router.ts';
 import { getPostAll, getPostOne } from '../api/post.ts';

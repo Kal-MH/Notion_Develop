@@ -12,3 +12,7 @@ export type responseCreatedNewDocumentType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type StorageDocumentType = {
+  [id: number]: boolean;
+};

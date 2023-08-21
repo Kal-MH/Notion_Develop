@@ -1,14 +1,14 @@
 const storage = window.localStorage;
 
-export const setItem = (key, value) => {
+export const setItem = <T>(key: string, value: T) => {
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    // console.log(e.message);
+    console.error(e);
   }
 };
 
-export const getItem = (key, defaultReturnValue) => {
+export const getItem = <T>(key: string, defaultReturnValue: T) => {
   try {
     const storedValue = storage.getItem(key);
 
@@ -18,6 +18,6 @@ export const getItem = (key, defaultReturnValue) => {
   }
 };
 
-export const removeItem = (key) => {
+export const removeItem = (key: string) => {
   storage.removeItem(key);
 };

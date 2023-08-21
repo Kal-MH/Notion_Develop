@@ -5,7 +5,11 @@ import { routeCreateDocument } from '../../utils/router.ts';
 const { TITLE, NEW_BTN, DOCUMENT_BLOCK_INNER } = classNameObj;
 const DOCUMENT_FOOTER_CONTENT = 'New Doc';
 
-export default function DocumentFooter({ $target }) {
+export default function DocumentFooter(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  this: any,
+  { $target }: { $target: HTMLElement },
+) {
   if (!hasNewTarget(new.target)) throw new Error(ERROR_NEW_KEYWORD_MISSING);
 
   const $footer = document.createElement('div');
@@ -26,7 +30,7 @@ export default function DocumentFooter({ $target }) {
 
   this.render();
 
-  $footer.querySelector(`.${NEW_BTN}`).addEventListener('click', () => {
-    routeCreateDocument({ id: null });
+  $footer?.querySelector(`.${NEW_BTN}`)?.addEventListener('click', () => {
+    routeCreateDocument({ id: 0 });
   });
 }
